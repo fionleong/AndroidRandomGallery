@@ -40,6 +40,8 @@ public class SavedImages extends MainActivity{
         button = new ArrayList<>();
         addButtons(button);
         list = (ListView) findViewById(R.id.list);
+
+        // SET UP FIREBASE DATABASE
         Firebase.setAndroidContext(this);
         firebase = new Firebase("https://randompics-6fd86.firebaseio.com/");
 
@@ -51,6 +53,7 @@ public class SavedImages extends MainActivity{
         firebase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // EVERY TIME AN IMAGE IS SAVED, UPDATE DB AND LOCAL
                 getUpdates(dataSnapshot);
             }
 
@@ -78,6 +81,7 @@ public class SavedImages extends MainActivity{
 
     public void getUpdates(DataSnapshot ds)
     {
+        // STORING EACH URL TO LOCAL ARRAYLIST FROM DB
         for (DataSnapshot data : ds.getChildren())
         {
             URL link = new URL();
@@ -86,8 +90,17 @@ public class SavedImages extends MainActivity{
             url.add(link.getURL());
         }
 
+        // SETTING ALL THE IMAGEBUTTON WITH THE SAVED IMAGE URL
         if (url.size() > 0)
         {
+            for (int i = 0; i < url.size(); i++) {
+                String link = url.get(i);
+                button.get(i).setTag(link);
+                Ion.with(button.get(i)).load(link);
+            }
+
+//            THE FOLLOWING CODE IS TO DISPLAY THE SAVED IMAGES URL ONTO A LIST VIEW, ON ITEM CLICK AND DIRECT TO OPEN URL IN BROWSER
+
 //            final ArrayAdapter arrayAdapter = new ArrayAdapter(SavedImages.this, android.R.layout.simple_list_item_1, url);
 //            list.setAdapter(arrayAdapter);
 //            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,14 +115,6 @@ public class SavedImages extends MainActivity{
 //                    startActivity(browserIntent);
 //                }
 //            });
-
-            for (int i = 0; i < url.size(); i++) {
-                String link = url.get(i);
-                //Log.i("url", " = " + url);
-                button.get(i).setTag(link);
-                //Log.i("button tag", " = " + button.get(i).getTag());
-                Ion.with(button.get(i)).load(link);
-            }
         }
         else
         {
@@ -133,8 +138,6 @@ public class SavedImages extends MainActivity{
             this.finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }

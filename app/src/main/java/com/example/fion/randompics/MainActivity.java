@@ -1,25 +1,14 @@
 package com.example.fion.randompics;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 
-import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -28,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,41 +33,6 @@ public class MainActivity extends AppCompatActivity {
         addButtons(button);
 
         randomPics();
-//        final ImageButton dropdown = (ImageButton) findViewById(R.id.dropdown);
-//        // Creating the popup menu
-//        dropdown.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                //Creating the instance of PopupMenu
-//                PopupMenu popup = new PopupMenu(MainActivity.this, dropdown);
-//                //Inflating the Popup using xml file
-//                popup.getMenuInflater().inflate(R.menu.menu_main, popup.getMenu());
-//
-//                //registering popup with OnMenuItemClickListener
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()) {
-//                            case R.id.refresh:
-//                                refresh();
-//                                return true;
-//
-//                            case R.id.savedImages:
-//                                savedImages();
-//                                return true;
-//
-//                            case R.id.search_bar:
-//                                searchImages();
-//                                return true;
-//                        }
-//                        return true;
-//                    }
-//                });
-//                popup.show();
-//            }
-//        });
-
-
     }
 
     @Override
@@ -114,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    // GENERATE ANOTHER 10 RANDOM IMAGES
     public void refresh() {
         this.recreate();
     }
@@ -140,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String result) {
-                        // do stuff with the result or error
                         readJSON(result);
                     }
                 });
@@ -158,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            // DISPLAYING THE RANDOM IMAGES
             for (int i = 0; i < urlArray.size(); i++) {
                 String url = urlArray.get(i);
                 //Log.i("url", " = " + url);
@@ -171,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // GO TO SHOWDETAILS INTENT
     public void showDetail(View view) {
+        // PROCEED IF IMAGE HAS BEEN SET
         if (view.getTag() != null)
         {
             Intent intent = new Intent(MainActivity.this, ImageDetails.class);
@@ -183,12 +138,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // GO TO SAVEDIMAGES INTENT
     public void savedImages()
     {
         Intent intent = new Intent(MainActivity.this, SavedImages.class);
         startActivity(intent);
     }
 
+    // GO TO SEARCHACTIVITY INTENT
     public void searchImages()
     {
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
