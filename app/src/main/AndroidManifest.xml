@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fion.randompics">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="Random Pictures"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ImageDetails"
+            android:screenOrientation="portrait"
+            android:label="Image Details" />
+
+        <activity android:name=".SavedImages"
+            android:screenOrientation="portrait"
+            android:label="Saved Images"/>
+
+        <activity android:name=".SearchActivity"
+            android:screenOrientation="portrait"
+            android:label="Search" >
+        </activity>
+
+    </application>
+
+    <activity android:name=".SearchableActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+        <meta-data
+            android:name="android.app.searchable"/>
+            <!--android:resource="@xml/searchablefile.xml" -->
+
+    </activity>
+
+</manifest>
